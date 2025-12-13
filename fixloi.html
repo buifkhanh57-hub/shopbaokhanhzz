@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Phòng chống tội phạm mạng – TH & THCS Bình Sơn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Font đẹp -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffe4ec, #ffffff);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      height: 100vh;
+      background: linear-gradient(135deg, #ff8fb1, #ffd1dc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      animation: fadeIn 1.5s ease;
+    }
+
+    header h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+      animation: slideDown 1.2s ease;
+    }
+
+    header p {
+      font-size: 20px;
+      max-width: 700px;
+      margin: auto;
+      animation: fadeIn 2s ease;
+    }
+
+    .scroll-btn {
+      margin-top: 40px;
+      padding: 14px 36px;
+      background: white;
+      color: #ff4f81;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.4s;
+      display: inline-block;
+    }
+
+    .scroll-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    /* Menu */
+    .menu {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 25px;
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.5s;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ffb6c1, #ffe4ec);
+      opacity: 0;
+      transition: 0.5s;
+      z-index: 0;
+    }
+
+    .card:hover::before { opacity: 1; }
+    .card * { position: relative; z-index: 1; }
+
+    .card:hover {
+      transform: translateY(-15px) scale(1.05);
+    }
+
+    .card h3 {
+      margin-top: 15px;
+      color: #ff4f81;
+    }
+
+    /* Trang nội dung */
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 80px 20px;
+      animation: pageIn 0.8s ease;
+    }
+
+    .page.active { display: block; }
+
+    .page-content {
+      max-width: 1000px;
+      margin: auto;
+      background: white;
+      padding: 50px;
+      border-radius: 30px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease;
+    }
+
+    .page-content img {
+      width: 100%;
+      border-radius: 25px;
+      margin: 30px 0;
+      animation: zoomIn 1.2s ease;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, #ff6f91, #ffb6c1);
+      color: white;
+      border-radius: 40px;
+      text-decoration: none;
+      transition: 0.4s;
+    }
+
+    .back-btn:hover { transform: scale(1.08); }
+
+    footer {
+      background: #ffb6c1;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    /* Animation */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideDown { from { transform: translateY(-40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes pageIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Phòng chống tội phạm mạng</h1>
+    <p>Trang tuyên truyền dành cho học sinh Trường Tiểu học & THCS Bình Sơn – Phú Thọ</p>
+    <div class="scroll-btn" onclick="scrollToMenu()">Khám phá ngay</div>
+  </div>
+</header>
+
+<section id="menu" class="menu">
+  <div class="card" onclick="openPage('luaDao')">
+    <h3>🚨 Lừa đảo trên mạng</h3>
+    <p>Nhận diện – Phòng tránh – Xử lý</p>
+  </div>
+  <div class="card" onclick="openPage('hack')">
+    <h3>🔐 Xâm nhập tài khoản</h3>
+    <p>Bảo vệ Facebook, Zalo, Game</p>
+  </div>
+  <div class="card" onclick="openPage('baoLuc')">
+    <h3>⚠️ Bạo lực mạng</h3>
+    <p>Hiểu để không làm tổn thương</p>
+  </div>
+  <div class="card" onclick="openPage('game')">
+    <h3>🎮 Ứng dụng độc hại</h3>
+    <p>Nguy cơ tiềm ẩn với học sinh</p>
+  </div>
+</section>
+
+<!-- Các trang chi tiết -->
+<div id="luaDao" class="page">
+  <div class="page-content">
+    <h2>🚨 Lừa đảo trên mạng</h2>
+    <p>Lừa đảo trên mạng là hành vi lợi dụng Internet để chiếm đoạt tiền, tài khoản và thông tin cá nhân của học sinh.</p>
+    <ul>
+      <li>Giả danh giáo viên, nhà trường</li>
+      <li>Thông báo trúng thưởng giả</li>
+      <li>Yêu cầu cung cấp mã OTP</li>
+      <li>Gửi link lạ qua Facebook, Zalo</li>
+    </ul>
+    <img src="https://via.placeholder.com/900x450?text=Lua+dao+tren+mang" />
+    <a class="back-btn" onclick="backMenu()">⬅ Quay lại</a>
+  </div>
+</div>
+
+<div id="hack" class="page">
+  <div class="page-content">
+    <h2>🔐 Xâm nhập tài khoản</h2>
+    <p>Hacker có thể chiếm tài khoản nếu mật khẩu yếu hoặc đăng nhập trên thiết bị không an toàn.</p>
+    <ul>
+      <li>Mật khẩu đơn giản</li>
+      <li>Dùng chung mật khẩu nhiều nơi</li>
+      <li>Không bật xác thực 2 lớp</li>
+    </ul>
+    <img src="https://via.placeholder.com/900x450?text=Hack+tai+khoan" />
+    <a class="back-btn" onclick="backMenu()">⬅ Quay lại</a>
+  </div>
+</div>
+
+<div id="baoLuc" class="page">
+  <div class="page-content">
+    <h2>⚠️ Bạo lực mạng</h2>
+    <p>Bạo lực mạng gây ảnh hưởng nghiêm trọng đến tâm lý học sinh.</p>
+    <ul>
+      <li>Chửi bới, xúc phạm</li>
+      <li>Đăng ảnh riêng tư</li>
+      <li>Lan truyền tin sai sự thật</li>
+    </ul>
+    <img src="https://via.placeholder.com/900x450?text=Bao+luc+mang" />
+    <a class="back-btn" onclick="backMenu()">⬅ Quay lại</a>
+  </div>
+</div>
+
+<div id="game" class="page">
+  <div class="page-content">
+    <h2>🎮 Ứng dụng & Game độc hại</h2>
+    <p>Nhiều game và ứng dụng có thể gây nghiện, lừa nạp tiền và đánh cắp thông tin.</p>
+    <ul>
+      <li>Tải app không rõ nguồn</li>
+      <li>Nội dung bạo lực</li>
+      <li>Dụ nạp tiền</li>
+    </ul>
+    <img src="https://via.placeholder.com/900x450?text=Game+doc+hai" />
+    <a class="back-btn" onclick="backMenu()">⬅ Quay lại</a>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Liên hệ hỗ trợ</strong></p>
+  <p>Bùi Bảo Khánh – Học sinh lớp 8B – Trường TH & THCS Bình Sơn</p>
+</footer>
+
+<script>
+  function scrollToMenu() {
+    document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function openPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function backMenu() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
