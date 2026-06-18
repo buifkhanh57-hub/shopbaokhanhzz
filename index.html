@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHANHZZ | Streetwear Vietnam - Wear Your Identity</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --white: #fefefe;
+            --off-white: #f5f3ef;
+            --gray-100: #f0f0f0;
+            --gray-200: #d9d9d9;
+            --gray-400: #999;
+            --gray-500: #777;
+            --gray-700: #3a3a3a;
+            --red-accent: #d94f3a;
+            --shadow-sm: 0 2px 12px rgba(0,0,0,0.06);
+            --shadow-md: 0 6px 28px rgba(0,0,0,0.1);
+            --shadow-lg: 0 12px 48px rgba(0,0,0,0.15);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.2);
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
+            --transition-fast: 0.2s cubic-bezier(0.22,0.61,0.36,1);
+            --transition-smooth: 0.35s cubic-bezier(0.22,0.61,0.36,1);
+            --transition-slow: 0.6s cubic-bezier(0.22,0.61,0.36,1);
+            --max-width: 1400px;
+            --header-height: 72px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; scroll-padding-top: var(--header-height); }
+        body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--black); line-height: 1.5; overflow-x: hidden; letter-spacing: -0.01em; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+        .top-bar { background: var(--black); color: white; text-align: center; padding: 8px 1rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; overflow: hidden; white-space: nowrap; }
+        .top-bar span { display: inline-block; animation: marquee 20s linear infinite; padding-left: 100%; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .navbar { position: sticky; top: 0; width: 100%; z-index: 1000; background: rgba(254,254,254,0.88); backdrop-filter: blur(24px); border-bottom: 1px solid rgba(0,0,0,0.05); height: var(--header-height); }
+        .navbar-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 2.5rem; }
+        .nav-logo { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.2em; color: var(--black); text-decoration: none; text-transform: uppercase; }
+        .nav-center { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-center a { text-decoration: none; color: var(--gray-700); font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; transition: 0.2s; position: relative; }
+        .nav-center a:hover, .nav-center a.active { color: var(--black); }
+        .nav-center a::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--black); transition: width 0.3s; }
+        .nav-center a:hover::after, .nav-center a.active::after { width: 100%; }
+        .nav-right { display: flex; align-items: center; gap: 1.2rem; }
+        .icon-btn { background: none; border: none; cursor: pointer; position: relative; color: var(--black); padding: 8px; border-radius: 50%; display: flex; transition: background 0.2s; }
+        .icon-btn:hover { background: var(--gray-100); }
+        .cart-dot { position: absolute; top: 2px; right: 2px; width: 9px; height: 9px; background: var(--red-accent); border-radius: 50%; border: 2px solid white; display: none; }
+        .cart-dot.show { display: block; animation: dotPop 0.35s ease-out; }
+        @keyframes dotPop { 0% { transform: scale(0); } 60% { transform: scale(1.6); } 100% { transform: scale(1); } }
+        .user-badge { font-size: 0.78rem; font-weight: 500; color: var(--gray-700); cursor: pointer; padding: 6px 14px; border-radius: 20px; border: 1.5px solid transparent; transition: 0.2s; }
+        .user-badge:hover { border-color: #ddd; background: #fafafa; }
+        .user-badge.logged-in { color: var(--black); font-weight: 600; border-color: #e0e0e0; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 10px; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; transition: 0.3s; }
+        .hamburger.toggle span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+        .hamburger.toggle span:nth-child(2) { opacity: 0; }
+        .hamburger.toggle span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+        .mobile-nav { display: none; position: fixed; inset: 0; background: var(--white); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .mobile-nav.open { opacity: 1; pointer-events: auto; }
+        .mobile-nav a { font-family: 'Oswald', sans-serif; font-size: 1.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: var(--black); }
+
+        .hero { position: relative; width: 100%; height: 92vh; min-height: 620px; display: flex; align-items: center; overflow: hidden; background: #1c1c1c; }
+        .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.45) contrast(1.1); }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,0.35) 0%, rgba(10,10,10,0.2) 30%, rgba(10,10,10,0.7) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; padding: 3rem; max-width: 700px; animation: slideUp 1s ease-out 0.2s both; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-eyebrow { font-family: 'Oswald', sans-serif; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 1rem; }
+        .hero-title { font-family: 'Oswald', sans-serif; font-size: clamp(4rem, 9vw, 8rem); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; line-height: 0.95; color: white; margin-bottom: 1rem; text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .hero-subtitle { font-size: clamp(1rem, 2.2vw, 1.3rem); font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 2.5rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.95rem 2.6rem; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: none; cursor: pointer; border-radius: 50px; transition: all var(--transition-smooth); text-decoration: none; font-family: 'Inter', sans-serif; }
+        .btn-outline-light { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.55); }
+        .btn-outline-light:hover { background: white; color: black; border-color: white; transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .btn-dark { background: var(--black); color: white; border: 2px solid var(--black); }
+        .btn-dark:hover { background: #222; transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .btn-block { width: 100%; justify-content: center; }
+
+        .section { padding: 6rem 2.5rem; max-width: var(--max-width); margin: 0 auto; }
+        .section-header.centered { text-align: center; margin-bottom: 3.5rem; }
+        .section-tag { font-family: 'Oswald', sans-serif; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 0.5rem; display: block; }
+        .section-title { font-family: 'Oswald', sans-serif; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 700; letter-spacing: 0.04em; color: var(--black); line-height: 1.1; text-transform: uppercase; }
+        .section-divider { width: 50px; height: 3px; background: var(--black); margin: 1rem auto 0; border-radius: 2px; }
+
+        .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .cat-card { position: relative; aspect-ratio: 3/4.2; overflow: hidden; cursor: pointer; border-radius: var(--radius-lg); background: #e8e8e8; transition: all var(--transition-smooth); }
+        .cat-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-xl); }
+        .cat-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.22,0.61,0.36,1); }
+        .cat-card:hover img { transform: scale(1.1); }
+        .cat-card-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(10,10,10,0.75) 100%); display: flex; align-items: flex-end; padding: 1.5rem; z-index: 1; }
+        .cat-card-label { font-family: 'Oswald', sans-serif; color: #fff; font-size: 1.2rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+
+        .shop-toolbar { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; align-items: center; justify-content: space-between; }
+        .filter-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .pill { padding: 0.5rem 1.3rem; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border: 1.5px solid #e0e0e0; background: white; color: var(--gray-500); cursor: pointer; border-radius: 50px; transition: all var(--transition-fast); font-family: 'Inter', sans-serif; }
+        .pill.active { background: var(--black); color: white; border-color: var(--black); }
+        .search-box { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.2rem; border: 1.5px solid #e0e0e0; border-radius: 50px; background: white; min-width: 240px; }
+        .search-box input { border: none; outline: none; font-family: 'Inter', sans-serif; font-size: 0.82rem; flex: 1; background: transparent; }
+        .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+        .product-card { background: white; border-radius: var(--radius-md); overflow: hidden; cursor: pointer; transition: all var(--transition-smooth); }
+        .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+        .product-img-wrap { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #f3f3f3; }
+        .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s cubic-bezier(0.22,0.61,0.36,1); opacity: 0; transition: opacity 0.4s ease, transform 0.7s cubic-bezier(0.22,0.61,0.36,1); }
+        .product-img-wrap img.loaded { opacity: 1; }
+        .product-card:hover .product-img-wrap img { transform: scale(1.08); }
+        .product-badge { position: absolute; top: 0.8rem; left: 0.8rem; background: var(--black); color: white; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; z-index: 2; }
+        .product-badge.new { background: var(--red-accent); }
+        .product-actions { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.8rem; display: flex; gap: 0.5rem; opacity: 0; transform: translateY(12px); transition: all var(--transition-smooth); background: linear-gradient(transparent, rgba(0,0,0,0.45)); z-index: 2; }
+        .product-card:hover .product-actions { opacity: 1; transform: translateY(0); }
+        .product-actions .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.62rem; border-radius: 25px; }
+        .btn-outline-sm { background: transparent; border: 1.5px solid rgba(255,255,255,0.8); color: white; }
+        .btn-outline-sm:hover { background: white; color: black; }
+        .btn-white-sm { background: white; color: black; }
+        .btn-white-sm:hover { background: black; color: white; }
+        .product-info { padding: 0.9rem 0.4rem 0.3rem; }
+        .product-cat { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-400); }
+        .product-name { font-size: 0.9rem; font-weight: 600; letter-spacing: 0.02em; color: var(--black); }
+        .product-price { font-size: 0.9rem; font-weight: 700; color: var(--black); }
+
+        .brand-story { background: var(--off-white); padding: 6rem 2.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: var(--max-width); margin: 0 auto; }
+        .brand-story-img { aspect-ratio: 4/5; border-radius: var(--radius-xl); overflow: hidden; background: #ddd; }
+        .brand-story-img img { width: 100%; height: 100%; object-fit: cover; }
+        .brand-story-text .highlight { font-family: 'Oswald', sans-serif; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--black); }
+
+        .marquee-strip { background: var(--black); color: white; padding: 1rem 0; overflow: hidden; white-space: nowrap; font-family: 'Oswald', sans-serif; font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; }
+        .marquee-strip-inner { display: inline-block; animation: scrollMarquee 25s linear infinite; }
+        .marquee-strip-inner span { margin: 0 2rem; opacity: 0.7; }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        .footer { background: var(--black); color: white; padding: 4rem 2.5rem 2rem; }
+        .footer-grid { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+        .footer-brand { font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
+        .footer-col h4 { font-family: 'Oswald', sans-serif; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6; margin-bottom: 1.2rem; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+        .footer-col a { color: var(--gray-400); text-decoration: none; font-size: 0.82rem; }
+        .footer-bottom { max-width: var(--max-width); margin: 3rem auto 0; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.72rem; color: var(--gray-400); }
+
+        .cart-overlay { position: fixed; inset: 0; background: rgba(10,10,10,0.55); z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .cart-overlay.open { opacity: 1; pointer-events: auto; }
+        .cart-sidebar { position: fixed; top: 0; right: -460px; width: 100%; max-width: 440px; height: 100vh; background: white; z-index: 3001; transition: right 0.4s; display: flex; flex-direction: column; box-shadow: var(--shadow-xl); border-radius: var(--radius-xl) 0 0 var(--radius-xl); }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; padding: 1.4rem 1.8rem; border-bottom: 1px solid #eee; }
+        .cart-body { flex: 1; overflow-y: auto; padding: 1.2rem 1.8rem; }
+        .cart-item { display: flex; gap: 1rem; margin-bottom: 1rem; }
+        .cart-item-img { width: 70px; height: 90px; object-fit: cover; border-radius: var(--radius-sm); }
+        .cart-item-remove { background: none; border: none; color: #c94a3a; cursor: pointer; font-weight: 600; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; }
+        .cart-footer { padding: 1.2rem 1.8rem; border-top: 1px solid #eee; }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(10,10,10,0.6); z-index: 4000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .modal-dialog { background: white; border-radius: var(--radius-xl); max-width: 500px; width: 100%; max-height: 88vh; overflow-y: auto; transform: scale(0.88); transition: transform 0.3s; }
+        .modal-overlay.open .modal-dialog { transform: scale(1); }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: white; border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; box-shadow: var(--shadow-sm); z-index: 2; }
+        .modal-img { width: 100%; aspect-ratio: 3/3.5; object-fit: cover; background: #f5f5f5; }
+        .modal-body { padding: 1.5rem 2rem 2rem; }
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--black); color: white; padding: 0.9rem 2.2rem; border-radius: 50px; z-index: 6000; transition: transform 0.35s; }
+        .toast.visible { transform: translateX(-50%) translateY(0); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.75s, transform 0.75s; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) { .products-grid { grid-template-columns: repeat(3, 1fr); } .categories-grid { grid-template-columns: repeat(2, 1fr); } .brand-story { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) { .nav-center { display: none; } .hamburger { display: flex; } .mobile-nav { display: flex; } .products-grid { grid-template-columns: repeat(2, 1fr); } .cart-sidebar { max-width: 100%; right: -100%; border-radius: 0; } .section { padding: 3rem 1.2rem; } .footer-grid { grid-template-columns: 1fr; text-align: center; } }
+        @media (max-width: 480px) { .products-grid { grid-template-columns: 1fr; } .hero-title { font-size: 2.8rem; } }
+    </style>
+</head>
+<body>
+    <div class="top-bar"><span>🚚 Free shipping over $100 &nbsp;&nbsp; 🔥 New Baggy Denim &nbsp;&nbsp; ⭐ Limited Drops Weekly</span></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#home" class="nav-logo">KHANHZZ</a>
+            <ul class="nav-center" id="navCenter">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#collections">Collections</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="nav-right">
+                <span class="user-badge" id="userBadge">Sign In</span>
+                <button class="icon-btn" id="cartBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="cart-dot" id="cartDot"></span></button>
+                <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#home" data-close-mobile>Home</a>
+        <a href="#shop" data-close-mobile>Shop</a>
+        <a href="#collections" data-close-mobile>Collections</a>
+        <a href="#about" data-close-mobile>About</a>
+    </div>
+
+    <section class="hero" id="home">
+        <img class="hero-bg" src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1600&q=80" alt="KHANHZZ streetwear hero" onerror="this.style.background='#1a1a1a';">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">New Season / 2026</p>
+            <h1 class="hero-title">KHANHZZ</h1>
+            <p class="hero-subtitle">Wear your identity</p>
+            <a href="#shop" class="btn btn-outline-light">Shop the Drop →</a>
+        </div>
+    </section>
+
+    <section class="section" id="collections">
+        <div class="section-header centered reveal"><span class="section-tag">Explore</span><h2 class="section-title">Shop by Category</h2><div class="section-divider"></div></div>
+        <div class="categories-grid">
+            <div class="cat-card reveal" onclick="navigateToShop('baggy-pants')">
+                <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=600&q=80" alt="Baggy Pants" loading="lazy" onerror="this.style.background='#d5d5d5';">
+                <div class="cat-card-overlay"><span class="cat-card-label">Baggy Pants</span></div>
+            </div>
+            <div class="cat-card reveal" onclick="navigateToShop('hoodie')">
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f9564a23?auto=format&fit=crop&w=600&q=80" alt="Hoodies" loading="lazy" onerror="this.style.background='#d5d5d5';">
+                <div class="cat-card-overlay"><span class="cat-card-label">Hoodies</span></div>
+            </div>
+            <div class="cat-card reveal" onclick="navigateToShop('t-shirt')">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864c9cf17ab?auto=format&fit=crop&w=600&q=80" alt="T-Shirts" loading="lazy" onerror="this.style.background='#d5d5d5';">
+                <div class="cat-card-overlay"><span class="cat-card-label">T-Shirts</span></div>
+            </div>
+            <div class="cat-card reveal" onclick="navigateToShop('accessories')">
+                <img src="https://images.unsplash.com/photo-1601924634867-9b1b0e8b5b0a?auto=format&fit=crop&w=600&q=80" alt="Accessories" loading="lazy" onerror="this.style.background='#d5d5d5';">
+                <div class="cat-card-overlay"><span class="cat-card-label">Accessories</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="shop">
+        <div class="section-header centered reveal"><span class="section-tag">All Products</span><h2 class="section-title">The Drop</h2><div class="section-divider"></div></div>
+        <div class="shop-toolbar reveal">
+            <div class="filter-pills" id="filterPills">
+                <button class="pill active" data-filter="all">All</button>
+                <button class="pill" data-filter="baggy-pants">Baggy Pants</button>
+                <button class="pill" data-filter="hoodie">Hoodies</button>
+                <button class="pill" data-filter="t-shirt">T-Shirts</button>
+                <button class="pill" data-filter="accessories">Accessories</button>
+                <button class="pill" data-filter="under-60">Under $60</button>
+                <button class="pill" data-filter="60-120">$60–$120</button>
+            </div>
+            <div class="search-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input type="text" id="searchInput" placeholder="Search streetwear...">
+            </div>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <div class="brand-story" id="about">
+        <div class="brand-story-img reveal">
+            <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=800&q=80" alt="Brand lifestyle" loading="lazy" onerror="this.style.background='#ccc';">
+        </div>
+        <div class="brand-story-text reveal">
+            <span class="section-tag">Our Story</span>
+            <h2 class="section-title">Born from the streets</h2>
+            <p><span class="highlight">KHANHZZ</span> is more than a brand — it's a movement. We craft premium streetwear for the bold, the creative, and the unapologetic. From oversized <strong>baggy pants</strong> to heavyweight hoodies, every piece is designed to make a statement.</p>
+            <a href="#shop" class="btn btn-dark" style="margin-top:1rem;">Explore Collection</a>
+        </div>
+    </div>
+
+    <div class="marquee-strip">
+        <div class="marquee-strip-inner">
+            <span>Baggy Fit</span><span>•</span><span>Oversized Silhouette</span><span>•</span><span>Premium Cotton</span><span>•</span><span>Limited Drops</span><span>•</span><span>Street Culture</span><span>•</span><span>Wear Your Identity</span><span>•</span><span>KHANHZZ</span><span>•</span>
+            <span>Baggy Fit</span><span>•</span><span>Oversized Silhouette</span><span>•</span><span>Premium Cotton</span><span>•</span><span>Limited Drops</span><span>•</span><span>Street Culture</span><span>•</span><span>Wear Your Identity</span><span>•</span><span>KHANHZZ</span><span>•</span>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><div class="footer-brand">KHANHZZ</div><p style="color:#999; margin-top:0.5rem;">Premium streetwear. Baggy pants, hoodies, tees & accessories.</p></div>
+            <div class="footer-col"><h4>Shop</h4><ul><li><a href="#shop">Baggy Pants</a></li><li><a href="#shop">Hoodies</a></li><li><a href="#shop">T-Shirts</a></li><li><a href="#shop">Accessories</a></li></ul></div>
+            <div class="footer-col"><h4>Support</h4><ul><li><a href="#">Size Guide</a></li><li><a href="#">Shipping</a></li><li><a href="#">Returns</a></li><li><a href="#">Contact</a></li></ul></div>
+            <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">Facebook</a></li><li><a href="mailto:hello@khanhzz.com">hello@khanhzz.com</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">&copy; <span id="year"></span> KHANHZZ. All rights reserved.</div>
+    </footer>
+
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header"><h3 style="font-family:Oswald;">Your Cart</h3><button class="cart-close-btn" id="cartCloseBtn">&times;</button></div>
+        <div class="cart-body" id="cartBody"><p style="color:#999; text-align:center; padding:3rem;">Your cart is empty</p></div>
+        <div class="cart-footer" id="cartFooterPanel" style="display:none;">
+            <div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:1rem;"><span>Subtotal</span><span id="cartTotalPrice">$0.00</span></div>
+            <button class="btn btn-dark btn-block" onclick="showToast('Checkout coming soon')">Checkout</button>
+        </div>
+    </aside>
+
+    <div class="modal-overlay" id="qvOverlay">
+        <div class="modal-dialog">
+            <button class="modal-close" id="qvClose">&times;</button>
+            <img class="modal-img" id="qvImage" src="" alt="">
+            <div class="modal-body">
+                <p class="modal-cat" id="qvCat" style="color:var(--gray-400);font-size:0.65rem;text-transform:uppercase;"></p>
+                <h3 class="modal-name" id="qvName" style="font-family:Oswald;"></h3>
+                <p class="modal-price" id="qvPrice" style="font-weight:700;font-size:1.3rem;"></p>
+                <p class="modal-desc" id="qvDesc" style="color:var(--gray-500);"></p>
+                <button class="btn btn-dark btn-block" id="qvAddBtn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="authOverlay">
+        <div class="modal-dialog" style="max-width:420px;">
+            <button class="modal-close" id="authClose">&times;</button>
+            <div class="modal-body">
+                <h3 id="authTitle" style="font-family:Oswald;font-size:1.3rem;">Sign In</h3>
+                <form id="authForm" autocomplete="off" style="display:flex;flex-direction:column;gap:1rem;">
+                    <input type="text" id="authUser" placeholder="Username" required style="padding:0.8rem;border:2px solid #e8e8e8;border-radius:8px;">
+                    <input type="password" id="authPass" placeholder="Password" required style="display:none;padding:0.8rem;border:2px solid #e8e8e8;border-radius:8px;">
+                    <button type="submit" class="btn btn-dark btn-block">Sign In</button>
+                </form>
+                <p style="text-align:center;font-size:0.8rem;margin-top:0.5rem;" id="authSwitchText"></p>
+                <button id="authLogout" style="display:none;width:100%;margin-top:0.5rem;padding:0.6rem;background:#f5f5f5;border:none;color:#c94a3a;font-weight:600;border-radius:30px;">Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        (function() {
+            const products = [
+                { id:1, name:'Wide-Leg Baggy Denim', category:'baggy-pants', price:109.99, badge:'Best Seller', desc:'Heavyweight wide-leg baggy denim. Relaxed fit with raw hem.', image:'https://tse3.mm.bing.net/th/id/OIP.tv-AX4SKEzKKT-kfAHdlgwHaHa?r=0&w=600&h=600&rs=1&pid=ImgDetMain&o=7&rm=3' },
+                { id:2, name:'Relaxed Cargo Baggy Pants', category:'baggy-pants', price:99.99, badge:null, desc:'Utility cargo pants in oversized baggy silhouette.', image:'https://y2kdream.com/cdn/shop/files/Y2K-Embroidered-Baggy-Jeans-5.webp?v=1708703960&width=1080' },
+                { id:3, name:'Parachute Baggy Pants', category:'baggy-pants', price:119.99, badge:'New Drop', desc:'Nylon parachute pants with ultra-baggy fit.', image:'https://media-assets.grailed.com/prd/listing/44221115/8ccdd5201d5347b3b43911767a82142e?h=700&fit=clip&auto=format' },
+                { id:4, name:'Essential Oversized Hoodie', category:'hoodie', price:89.99, badge:null, desc:'450GSM heavyweight cotton hoodie, oversized boxy fit.', image:'https://media-assets.grailed.com/prd/listing/temp/ebfd621bf536474b90b181dbee367b7c?w=700&h=700&fit=clip&auto=format' },
+                { id:5, name:'Half-Zip Pullover Hoodie', category:'hoodie', price:95.99, badge:null, desc:'Modern half-zip hoodie in soft brushed fleece.', image:'https://media-assets.grailed.com/prd/listing/temp/00bc73d283ac446fb77516ef720280c6?auto=format' },
+                { id:6, name:'Graphic Street Tee', category:'t-shirt', price:49.99, badge:'Limited', desc:'Bold graphic on premium organic cotton.', image:'https://m.media-amazon.com/images/I/71nJ6UvrCLL._AC_SL1500_.jpg' },
+                { id:7, name:'Clean Logo Tee', category:'t-shirt', price:42.99, badge:null, desc:'Minimal KHANHZZ logo tee in heavyweight cotton.', image:'https://cdn.dsmcdn.com/ty496/product/media/images/20220801/7/152913172/532864253/1/1_org_zoom.jpg' },
+                { id:8, name:'Crossbody Sling Bag', category:'accessories', price:64.99, badge:null, desc:'Technical nylon crossbody bag.', image:'https://i.etsystatic.com/55468588/r/il/4c293e/6374951782/il_1080xN.6374951782_t6at.jpg' },
+                { id:9, name:'Ribbed Knit Beanie', category:'accessories', price:32.99, badge:null, desc:'Thick ribbed beanie with logo patch.', image:'https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-mah1jmsxzfmgb8' },
+                { id:10, name:'Oversized Denim Jacket', category:'hoodie', price:139.99, badge:'Premium', desc:'Vintage-wash oversized denim jacket.', image:'https://tse3.mm.bing.net/th/id/OIP.U5Oyw6X5u3qeiahwN1CFuQHaJ4?r=0&rs=1&pid=ImgDetMain&o=7&rm=3' }
+            ];
+
+            let cart = [];
+            let currentUser = null;
+            let users = []; // lưu danh sách users
+            let activeFilter = 'all';
+            let searchTerm = '';
+            let qvProductId = null;
+            let authMode = 'login';
+
+            const $ = (s) => document.querySelector(s);
+            const $$ = (s) => document.querySelectorAll(s);
+
+            const $productsGrid = $('#productsGrid');
+            const $filterPills = $('#filterPills');
+            const $searchInput = $('#searchInput');
+            const $cartSidebar = $('#cartSidebar');
+            const $cartOverlay = $('#cartOverlay');
+            const $cartBody = $('#cartBody');
+            const $cartFooterPanel = $('#cartFooterPanel');
+            const $cartTotalPrice = $('#cartTotalPrice');
+            const $cartDot = $('#cartDot');
+            const $cartBtn = $('#cartBtn');
+            const $cartCloseBtn = $('#cartCloseBtn');
+            const $qvOverlay = $('#qvOverlay');
+            const $qvClose = $('#qvClose');
+            const $qvImage = $('#qvImage');
+            const $qvCat = $('#qvCat');
+            const $qvName = $('#qvName');
+            const $qvPrice = $('#qvPrice');
+            const $qvDesc = $('#qvDesc');
+            const $qvAddBtn = $('#qvAddBtn');
+            const $authOverlay = $('#authOverlay');
+            const $authClose = $('#authClose');
+            const $authForm = $('#authForm');
+            const $authUser = $('#authUser');
+            const $authPass = $('#authPass');
+            const $authTitle = $('#authTitle');
+            const $authSwitchText = $('#authSwitchText');
+            const $authLogout = $('#authLogout');
+            const $userBadge = $('#userBadge');
+            const $toast = $('#toast');
+            const $hamburger = $('#hamburger');
+            const $mobileNav = $('#mobileNav');
+            const $year = $('#year');
+
+            // Global IntersectionObserver
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        revealObserver.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+
+            function observeReveal() {
+                $$('.reveal').forEach(el => {
+                    if (!el.classList.contains('visible')) revealObserver.observe(el);
+                });
+            }
+
+            // Debounce search
+            let searchDebounce;
+            function debounceRender() {
+                clearTimeout(searchDebounce);
+                searchDebounce = setTimeout(() => {
+                    renderProducts();
+                }, 250);
+            }
+
+            function init() {
+                $year.textContent = new Date().getFullYear();
+                loadFromStorage();
+                renderProducts();
+                updateCartUI();
+                updateUserUI();
+                setupListeners();
+                observeReveal();
+                if (window.location.hash === '#shop') setTimeout(() => document.getElementById('shop')?.scrollIntoView({behavior:'smooth'}),300);
+            }
+
+            function loadFromStorage() {
+                try { const c = localStorage.getItem('khanhzz_v6_cart'); if(c) cart = JSON.parse(c); } catch(e){}
+                try { const u = localStorage.getItem('khanhzz_v6_users'); if(u) users = JSON.parse(u); } catch(e){}
+                try { const cu = localStorage.getItem('khanhzz_v6_current_user'); if(cu) currentUser = JSON.parse(cu); } catch(e){}
+            }
+
+            function saveCart() { try { localStorage.setItem('khanhzz_v6_cart', JSON.stringify(cart)); } catch(e){} }
+            function saveUsers() { try { localStorage.setItem('khanhzz_v6_users', JSON.stringify(users)); } catch(e){} }
+            function saveCurrentUser() { try { if(currentUser) localStorage.setItem('khanhzz_v6_current_user', JSON.stringify(currentUser)); else localStorage.removeItem('khanhzz_v6_current_user'); } catch(e){} }
+
+            function addToCart(pid) {
+                const p = products.find(x=>x.id===pid); if(!p) return;
+                const existing = cart.find(i=>i.pid===pid);
+                if(existing) existing.qty++; else cart.push({pid:p.id, name:p.name, price:p.price, image:p.image, qty:1});
+                saveCart(); updateCartUI(); showToast('Added to cart ✓'); animateDot();
+            }
+            function removeFromCart(pid) { cart = cart.filter(i=>i.pid!==pid); saveCart(); updateCartUI(); showToast('Removed'); }
+            function cartTotal() { return cart.reduce((t,i)=>t+i.price*i.qty,0); }
+            function cartCount() { return cart.reduce((c,i)=>c+i.qty,0); }
+            function updateCartUI() {
+                if(cartCount()>0) $cartDot.classList.add('show'); else $cartDot.classList.remove('show');
+                renderCartBody();
+            }
+            function animateDot() { $cartDot.classList.remove('show'); void $cartDot.offsetWidth; $cartDot.classList.add('show'); }
+            function renderCartBody() {
+                if(cart.length===0) {
+                    $cartBody.innerHTML = '<p style="color:#999;text-align:center;padding:3rem;">Your cart is empty</p>';
+                    $cartFooterPanel.style.display = 'none';
+                } else {
+                    $cartBody.innerHTML = cart.map(i=>`
+                        <div class="cart-item">
+                            <img class="cart-item-img" src="${i.image}" alt="${i.name}" loading="lazy" onerror="this.style.background='#e8e8e8';">
+                            <div style="flex:1;">
+                                <p style="font-weight:600;">${i.name}</p>
+                                <p style="font-size:0.7rem;color:#999;">Qty: ${i.qty}</p>
+                                <p style="font-weight:700;">$${(i.price*i.qty).toFixed(2)}</p>
+                                <button class="cart-item-remove" data-rid="${i.pid}">Remove</button>
+                            </div>
+                        </div>`).join('');
+                    $cartFooterPanel.style.display = 'block';
+                    $cartTotalPrice.textContent = '$'+cartTotal().toFixed(2);
+                    $cartBody.querySelectorAll('.cart-item-remove').forEach(b=>b.addEventListener('click',(e)=>{ e.stopPropagation(); removeFromCart(parseInt(b.dataset.rid)); }));
+                }
+            }
+
+            function openCart() { $cartSidebar.classList.add('open'); $cartOverlay.classList.add('open'); document.body.style.overflow='hidden'; }
+            function closeCart() { $cartSidebar.classList.remove('open'); $cartOverlay.classList.remove('open'); document.body.style.overflow=''; }
+
+            function updateUserUI() {
+                if(currentUser) { $userBadge.textContent = 'Hi, '+currentUser.username; $userBadge.classList.add('logged-in'); $authLogout.style.display='block'; }
+                else { $userBadge.textContent = 'Sign In'; $userBadge.classList.remove('logged-in'); $authLogout.style.display='none'; }
+            }
+            function openAuth() {
+                authMode='login'; syncAuthUI();
+                $authOverlay.classList.add('open'); document.body.style.overflow='hidden';
+                $authUser.value=''; $authPass.value='';
+            }
+            function closeAuth() { $authOverlay.classList.remove('open'); document.body.style.overflow=''; }
+
+            // Tạo nút switch cố định, không bị mất event
+            const switchBtn = document.createElement("button");
+            switchBtn.id = "authSwitchBtn";
+            switchBtn.style.cssText = "background:none;border:none;font-weight:700;text-decoration:underline;cursor:pointer;";
+            switchBtn.addEventListener("click", () => {
+                authMode = authMode === "login" ? "register" : "login";
+                syncAuthUI();
+                $authUser.value = "";
+                $authPass.value = "";
+            });
+
+            function syncAuthUI() {
+                if(authMode==='login') {
+                    $authTitle.textContent='Sign In'; $authPass.style.display='none'; $authPass.required=false;
+                    switchBtn.textContent = 'Create one';
+                    $authSwitchText.innerHTML = 'No account? ';
+                } else {
+                    $authTitle.textContent='Create Account'; $authPass.style.display='block'; $authPass.required=true;
+                    switchBtn.textContent = 'Sign In';
+                    $authSwitchText.innerHTML = 'Already have an account? ';
+                }
+                $authSwitchText.appendChild(switchBtn);
+                if(currentUser) $authLogout.style.display='block'; else $authLogout.style.display='none';
+            }
+
+            function handleAuth(e) {
+                e.preventDefault();
+                const username = $authUser.value.trim();
+                const password = $authPass.value.trim();
+                if(!username || username.length<2) return showToast('Enter a valid username');
+
+                if(authMode==='register') {
+                    if(!password || password.length<4) return showToast('Password min 4 characters');
+                    // Kiểm tra user tồn tại
+                    if(users.find(u => u.username === username)) {
+                        return showToast('Username already exists');
+                    }
+                    const newUser = { username, password };
+                    users.push(newUser);
+                    saveUsers();
+                    currentUser = newUser;
+                    saveCurrentUser();
+                    updateUserUI();
+                    closeAuth();
+                    showToast('Welcome, '+username+'! 🎉');
+                } else {
+                    // Login
+                    const found = users.find(u => u.username === username && u.password === password);
+                    if(found) {
+                        currentUser = found;
+                        saveCurrentUser();
+                        updateUserUI();
+                        closeAuth();
+                        showToast('Welcome back, '+username+'! 👋');
+                    } else {
+                        // Nếu chưa có user nào, cho phép tạo mới (giữ lại tính năng cũ)
+                        if(users.length === 0) {
+                            const newUser = { username, password };
+                            users.push(newUser);
+                            saveUsers();
+                            currentUser = newUser;
+                            saveCurrentUser();
+                            updateUserUI();
+                            closeAuth();
+                            showToast('Welcome, '+username+'! 🎉');
+                        } else {
+                            showToast('Invalid username or password');
+                        }
+                    }
+                }
+                syncAuthUI();
+            }
+
+            function handleLogout() { currentUser=null; saveCurrentUser(); updateUserUI(); closeAuth(); showToast('Logged out'); syncAuthUI(); }
+
+            function getFiltered() {
+                let f = [...products];
+                if(activeFilter==='under-60') f=f.filter(p=>p.price<60);
+                else if(activeFilter==='60-120') f=f.filter(p=>p.price>=60 && p.price<=120);
+                else if(activeFilter!=='all') f=f.filter(p=>p.category===activeFilter);
+                if(searchTerm.trim()) { const q=searchTerm.trim().toLowerCase(); f=f.filter(p=>p.name.toLowerCase().includes(q) || p.category.includes(q)); }
+                return f;
+            }
+
+            function renderProducts() {
+                const filtered = getFiltered();
+                if(filtered.length===0) {
+                    $productsGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:3rem;color:#999;">No products found.</p>';
+                } else {
+                    $productsGrid.innerHTML = filtered.map(p=>`
+                        <div class="product-card reveal" data-pid="${p.id}">
+                            <div class="product-img-wrap">
+                                <img src="${p.image}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='#e0e0e0'; this.alt='Image not available';">
+                                ${p.badge ? `<span class="product-badge ${p.badge==='New Drop'||p.badge==='Limited'?'new':''}">${p.badge}</span>` : ''}
+                                <div class="product-actions">
+                                    <button class="btn btn-outline-sm quick-view-btn" data-qv="${p.id}">Quick View</button>
+                                    <button class="btn btn-white-sm add-btn" data-add="${p.id}">Add to Cart</button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <p class="product-cat">${p.category.replace('-',' ')}</p>
+                                <p class="product-name">${p.name}</p>
+                                <p class="product-price">$${p.price.toFixed(2)}</p>
+                            </div>
+                        </div>`).join('');
+                    $productsGrid.querySelectorAll('img').forEach(img => {
+                        if (img.complete) img.classList.add('loaded');
+                        else img.addEventListener('load', () => img.classList.add('loaded'));
+                    });
+                    $productsGrid.querySelectorAll('.add-btn').forEach(b=>b.addEventListener('click',(e)=>{ e.stopPropagation(); addToCart(parseInt(b.dataset.add)); }));
+                    $productsGrid.querySelectorAll('.quick-view-btn').forEach(b=>b.addEventListener('click',(e)=>{ e.stopPropagation(); openQuickView(parseInt(b.dataset.qv)); }));
+                    $productsGrid.querySelectorAll('.product-card').forEach(c=>c.addEventListener('click',()=>openQuickView(parseInt(c.dataset.pid))));
+                }
+                observeReveal();
+            }
+
+            function setFilter(f) { 
+                activeFilter=f; 
+                $$('#filterPills .pill').forEach(p=>p.classList.remove('active')); 
+                const a=document.querySelector(`#filterPills [data-filter="${f}"]`); 
+                if(a) a.classList.add('active'); 
+                renderProducts(); 
+            }
+
+            function navigateToShop(cat) { 
+                activeFilter=cat; 
+                $$('#filterPills .pill').forEach(p=>p.classList.remove('active')); 
+                const a=document.querySelector(`#filterPills [data-filter="${cat}"]`); 
+                if(a) a.classList.add('active'); 
+                else {
+                    // Nếu không tìm thấy pill (ví dụ under-60), set all
+                    document.querySelector('#filterPills [data-filter="all"]')?.classList.add('active');
+                }
+                renderProducts(); 
+                document.getElementById('shop')?.scrollIntoView({behavior:'smooth'}); 
+            }
+
+            function openQuickView(pid) {
+                const p = products.find(x=>x.id===pid); if(!p) return;
+                qvProductId = pid;
+                $qvImage.src = p.image;
+                $qvImage.alt = p.name;
+                $qvCat.textContent = p.category.replace('-',' '); $qvName.textContent = p.name;
+                $qvPrice.textContent = '$'+p.price.toFixed(2); $qvDesc.textContent = p.desc;
+                $qvOverlay.classList.add('open'); document.body.style.overflow='hidden';
+            }
+            function closeQuickView() { $qvOverlay.classList.remove('open'); document.body.style.overflow=''; qvProductId=null; }
+
+            function showToast(msg) { $toast.textContent=msg; $toast.classList.add('visible'); clearTimeout($toast._t); $toast._t=setTimeout(()=>$toast.classList.remove('visible'),2300); }
+
+            function setupListeners() {
+                $cartBtn.addEventListener('click',openCart);
+                $cartCloseBtn.addEventListener('click',closeCart);
+                $cartOverlay.addEventListener('click',closeCart);
+                $qvClose.addEventListener('click',closeQuickView);
+                $qvOverlay.addEventListener('click',(e)=>{ if(e.target===$qvOverlay) closeQuickView(); });
+                $qvAddBtn.addEventListener('click',()=>{ if(qvProductId){ addToCart(qvProductId); closeQuickView(); } });
+                $userBadge.addEventListener('click',openAuth);
+                $authClose.addEventListener('click',closeAuth);
+                $authOverlay.addEventListener('click',(e)=>{ if(e.target===$authOverlay) closeAuth(); });
+                $authForm.addEventListener('submit',handleAuth);
+                $authLogout.addEventListener('click',handleLogout);
+                syncAuthUI();
+                $filterPills.addEventListener('click',(e)=>{ const pill=e.target.closest('.pill'); if(pill) setFilter(pill.dataset.filter); });
+                $searchInput.addEventListener('input',()=>{ searchTerm=$searchInput.value; debounceRender(); });
+                $hamburger.addEventListener('click',()=>{ $hamburger.classList.toggle('toggle'); $mobileNav.classList.toggle('open'); document.body.style.overflow=$mobileNav.classList.contains('open')?'hidden':''; });
+                // Đóng mobile menu khi click link có data-close-mobile
+                $$('[data-close-mobile]').forEach(l=>l.addEventListener('click',()=>{ $hamburger.classList.remove('toggle'); $mobileNav.classList.remove('open'); document.body.style.overflow=''; }));
+                document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ if($cartSidebar.classList.contains('open')) closeCart(); if($qvOverlay.classList.contains('open')) closeQuickView(); if($authOverlay.classList.contains('open')) closeAuth(); if($mobileNav.classList.contains('open')){ $hamburger.classList.remove('toggle'); $mobileNav.classList.remove('open'); document.body.style.overflow=''; } } });
+            }
+
+            init();
+            window.navigateToShop = navigateToShop;
+            window.showToast = showToast;
+        })();
+    </script>
+</body>
+</html>
