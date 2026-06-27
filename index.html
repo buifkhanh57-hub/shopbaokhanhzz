@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KHANHZZ ARMORY ELITE | Vũ Khí Phương Tây & Đặc Nhiệm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0b0c0e;
+            --surface: #16181c;
+            --surface2: #202329;
+            --border: #2a2e35;
+            --text: #eaecef;
+            --text-secondary: #8b9098;
+            --accent: #c99c47;
+            --accent-glow: #e2b96f;
+            --red: #d44c3a;
+            --green: #2e9a5e;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 22px;
+            --shadow-card: 0 10px 28px rgba(0,0,0,0.5);
+            --shadow-hover: 0 18px 42px rgba(0,0,0,0.7);
+            --transition-main: 0.32s cubic-bezier(0.25,0.1,0.25,1);
+            --header-height: 72px;
+            --max-width: 1440px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: var(--header-height); }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+        .top-bar { background: var(--accent); color: #0b0c0e; text-align: center; padding: 8px 1rem; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; overflow: hidden; }
+        .marquee span { display: inline-block; animation: marquee 22s linear infinite; padding-left: 100%; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+        .navbar { position: sticky; top: 0; z-index: 1000; background: rgba(11,12,14,0.92); backdrop-filter: blur(18px); border-bottom: 1px solid var(--border); height: var(--header-height); }
+        .navbar-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 2.4rem; display: flex; align-items: center; justify-content: space-between; height: 100%; }
+        .logo { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 700; letter-spacing: 0.22em; color: var(--accent); text-decoration: none; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; position: relative; transition: color 0.2s; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--text); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-icons { display: flex; align-items: center; gap: 1rem; }
+        .icon-btn { background: none; border: none; cursor: pointer; color: var(--text-secondary); padding: 8px; border-radius: 50%; display: flex; transition: background 0.2s, color 0.2s; }
+        .icon-btn:hover { background: var(--surface2); color: var(--text); }
+        .cart-dot { position: absolute; top: 4px; right: 4px; width: 9px; height: 9px; background: var(--red); border-radius: 50%; border: 2px solid var(--bg); display: none; }
+        .cart-dot.active { display: block; animation: dotPop 0.35s ease-out; }
+        @keyframes dotPop { 0% { transform: scale(0); } 60% { transform: scale(1.7); } 100% { transform: scale(1); } }
+        .user-area { position: relative; }
+        .user-btn { background: none; border: 1.5px solid var(--border); color: var(--text-secondary); padding: 6px 16px; border-radius: 30px; font-size: 0.7rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+        .user-btn.logged { border-color: var(--accent); color: var(--accent); }
+
+        .hero { position: relative; width: 100%; height: 92vh; min-height: 640px; overflow: hidden; }
+        .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; background-size: cover; background-position: center; }
+        .hero-slide.active { opacity: 1; }
+        .hero-overlay { position: absolute; inset: 0; background: radial-gradient(circle at 30% 40%, rgba(11,12,14,0.2) 0%, rgba(11,12,14,0.8) 90%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; max-width: 720px; padding: 2rem 2.4rem; margin-top: 10vh; animation: slideUp 1s ease 0.3s both; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+        .hero-tag { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 1rem; }
+        .hero-title { font-family: 'Oswald', sans-serif; font-size: clamp(3.8rem, 9vw, 7.5rem); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; line-height: 0.92; color: #fff; text-shadow: 0 6px 30px rgba(0,0,0,0.7); }
+        .hero-sub { font-size: 1.1rem; font-weight: 300; letter-spacing: 0.15em; color: rgba(255,255,255,0.8); margin: 1.5rem 0 2.5rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.95rem 2.6rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border: none; cursor: pointer; border-radius: 50px; transition: all var(--transition-main); text-decoration: none; font-family: 'Inter', sans-serif; }
+        .btn-outline-gold { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+        .btn-outline-gold:hover { background: var(--accent); color: #0b0c0e; transform: translateY(-5px); box-shadow: 0 12px 28px rgba(201,156,71,0.35); }
+        .btn-dark-gold { background: var(--accent); color: #0b0c0e; border: 2px solid var(--accent); }
+        .btn-dark-gold:hover { background: #e2b96f; transform: translateY(-4px); box-shadow: 0 14px 32px rgba(201,156,71,0.5); }
+
+        .section { padding: 5rem 2.4rem; max-width: var(--max-width); margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 3.2rem; }
+        .section-tag { font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; }
+        .section-title { font-family: 'Oswald', sans-serif; font-size: 2.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); }
+        .section-divider { width: 60px; height: 3px; background: var(--accent); margin: 0.8rem auto 0; }
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.2rem; }
+        .cat-card { position: relative; aspect-ratio: 1/1.2; overflow: hidden; cursor: pointer; border-radius: var(--radius-lg); background: var(--surface2); transition: transform 0.4s, box-shadow 0.4s; }
+        .cat-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); }
+        .cat-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+        .cat-card:hover img { transform: scale(1.15); }
+        .cat-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(11,12,14,0.8) 10%, transparent 60%); display: flex; align-items: flex-end; padding: 1.2rem; }
+        .cat-label { font-family: 'Oswald', sans-serif; color: #fff; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+
+        .toolbar { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .filter-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .pill { padding: 0.5rem 1.3rem; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; border: 1.5px solid var(--border); background: transparent; color: var(--text-secondary); cursor: pointer; border-radius: 50px; transition: all 0.2s; }
+        .pill.active { background: var(--accent); color: #0b0c0e; border-color: var(--accent); }
+        .search-wrap { display: flex; align-items: center; gap: 0.5rem; background: var(--surface); border: 1px solid var(--border); padding: 0.5rem 1.2rem; border-radius: 50px; min-width: 240px; }
+        .search-wrap input { background: transparent; border: none; outline: none; color: var(--text); font-size: 0.78rem; width: 100%; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.8rem; }
+        .product-card { background: var(--surface); border-radius: var(--radius-md); overflow: hidden; cursor: pointer; transition: transform 0.35s, box-shadow 0.35s; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+        /* THAY ĐỔI ASPECT-RATIO VÀ OBJECT-FIT ĐỂ ẢNH KHÔNG BỊ CHE */
+        .product-img { position: relative; aspect-ratio: auto; overflow: hidden; background: #1e2127; }
+        .product-img img { width: 100%; height: auto; display: block; object-fit: contain; transition: transform 0.7s, opacity 0.5s; opacity: 0; background: #1e2127; }
+        .product-img img.loaded { opacity: 1; }
+        .product-card:hover .product-img img { transform: scale(1.05); }
+        .product-badge { position: absolute; top: 0.8rem; left: 0.8rem; background: var(--red); color: #fff; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; z-index: 2; }
+        .product-badge.special { background: var(--accent); color: #0b0c0e; }
+        .quick-actions { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.8rem; display: flex; gap: 0.5rem; opacity: 0; transform: translateY(15px); transition: all 0.3s; background: linear-gradient(transparent, rgba(0,0,0,0.85)); z-index: 2; }
+        .product-card:hover .quick-actions { opacity: 1; transform: translateY(0); }
+        .btn-sm { padding: 0.4rem 0.9rem; font-size: 0.62rem; border-radius: 25px; border: 1.5px solid rgba(255,255,255,0.7); color: #fff; background: transparent; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .btn-sm:hover { background: #fff; color: #000; }
+        .btn-sm.solid { background: var(--accent); color: #0b0c0e; border-color: var(--accent); }
+        .btn-sm.solid:hover { background: #e2b96f; }
+        .product-info { padding: 0.9rem 0.5rem 0.4rem; }
+        .product-cat { font-size: 0.6rem; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; }
+        .product-name { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+        .product-price { font-size: 1rem; font-weight: 700; color: var(--accent); }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 5000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .modal-dialog { background: var(--surface); border-radius: var(--radius-lg); max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto; transform: scale(0.85); transition: transform 0.3s; border: 1px solid var(--border); }
+        .modal-overlay.open .modal-dialog { transform: scale(1); }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: var(--surface2); border: none; color: var(--text); width: 32px; height: 32px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; z-index: 2; display: flex; align-items: center; justify-content: center; }
+        .modal-img { width: 100%; aspect-ratio: auto; object-fit: contain; background: #1e2127; }
+        .modal-body { padding: 1.5rem 2rem 2rem; }
+        .modal-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin: 1.2rem 0; }
+        .spec-item { background: var(--surface2); padding: 0.6rem; border-radius: 8px; }
+        .spec-label { font-size: 0.6rem; color: var(--text-secondary); text-transform: uppercase; }
+        .spec-value { font-weight: 600; color: var(--text); }
+
+        .cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 3000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .cart-overlay.open { opacity: 1; pointer-events: auto; }
+        .cart-sidebar { position: fixed; top: 0; right: -460px; width: 100%; max-width: 440px; height: 100vh; background: var(--surface); z-index: 3001; transition: right 0.4s; display: flex; flex-direction: column; border-left: 1px solid var(--border); box-shadow: -10px 0 35px rgba(0,0,0,0.6); }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 1.8rem; border-bottom: 1px solid var(--border); }
+        .cart-body { flex: 1; overflow-y: auto; padding: 1.2rem 1.8rem; }
+        .cart-item { display: flex; gap: 1rem; margin-bottom: 1.2rem; align-items: center; }
+        .cart-item-img { width: 60px; height: 80px; object-fit: contain; background: #1e2127; border-radius: 8px; }
+        .cart-item-remove { background: none; border: none; color: var(--red); font-weight: 600; cursor: pointer; font-size: 0.65rem; text-transform: uppercase; }
+        .cart-footer { padding: 1.2rem 1.8rem; border-top: 1px solid var(--border); }
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--accent); color: #0b0c0e; font-weight: 700; padding: 0.9rem 2.2rem; border-radius: 50px; z-index: 6000; transition: transform 0.35s; letter-spacing: 0.05em; }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        .footer { background: #0a0b0d; padding: 4rem 2.4rem 2rem; margin-top: 3rem; border-top: 1px solid var(--border); }
+        .footer-grid { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; }
+        .footer-brand { font-family: 'Rajdhani', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+        .footer-col h4 { font-size: 0.7rem; letter-spacing: 0.12em; color: var(--text-secondary); text-transform: uppercase; margin-bottom: 1rem; }
+        .footer-col ul { list-style: none; }
+        .footer-col a { color: var(--text-secondary); text-decoration: none; font-size: 0.78rem; line-height: 2; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--accent); }
+        .copyright { text-align: center; color: var(--text-secondary); font-size: 0.7rem; margin-top: 2.5rem; }
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar"><div class="marquee"><span>⚡ VẬN CHUYỂN MIỄN PHÍ CHO ĐƠN TRÊN 500$ &nbsp;|&nbsp; 🔥 VŨ KHÍ ĐẶC NHIỆM MỚI VỀ &nbsp;|&nbsp; ⭐ BẢO HÀNH TRỌN ĐỜI</span></div></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#home" class="logo">KHANHZZ<span style="color:#fff;"> ARMORY</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Trang Chủ</a></li>
+                <li><a href="#categories">Danh Mục</a></li>
+                <li><a href="#shop">Cửa Hàng</a></li>
+                <li><a href="#special">Đặc Nhiệm</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="user-area"><button class="user-btn" id="userBtn">Đăng Nhập</button></div>
+                <button class="icon-btn" id="cartBtn" style="position:relative;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                    <span class="cart-dot" id="cartDot"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-slide active" style="background-image: url('https://tse3.mm.bing.net/th/id/OIP.pveYhyVat6uYzCcB_RhmjgHaD4?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3');"></div>
+        <div class="hero-slide" style="background-image: url('https://nqs.1cdn.vn/2025/09/07/250907115130720_screen-shot-2025-09-07-at-95309-am.png');"></div>
+        <div class="hero-slide" style="background-image: url('https://tse3.mm.bing.net/th/id/OIP.fsZbch-6uzemollOuclHvwHaEu?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3');"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <p class="hero-tag">Bộ Sưu Tập 2026</p>
+            <h1 class="hero-title">TINH HOA<br>PHƯƠNG TÂY</h1>
+            <p class="hero-sub">Sở hữu những huyền thoại từ lực lượng đặc nhiệm</p>
+            <a href="#shop" class="btn btn-outline-gold">Khám Phá Ngay →</a>
+        </div>
+    </section>
+
+    <section class="section" id="categories">
+        <div class="section-header">
+            <span class="section-tag">Khám Phá</span>
+            <h2 class="section-title">Danh Mục Vũ Khí</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="categories-grid">
+            <div class="cat-card" onclick="filterCategory('sniper')">
+                <img src="https://thfvnext.bing.com/th/id/R.45da4b925246c673641ce8677cbdea8f?rik=vTh3D8LvOuVVWA&pid=ImgRaw&r=0" alt="Súng bắn tỉa" loading="lazy" onerror="this.style.background='#2a2e35'" />
+                <div class="cat-overlay"><span class="cat-label">Súng Bắn Tỉa</span></div>
+            </div>
+            <div class="cat-card" onclick="filterCategory('smg')">
+                <img src="https://tse4.mm.bing.net/th/id/OIP.hwTEPUpUr8yEq-Edk503-gHaEK?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="SMG" loading="lazy" onerror="this.style.background='#2a2e35'" />
+                <div class="cat-overlay"><span class="cat-label">Súng Tiểu Liên</span></div>
+            </div>
+            <div class="cat-card" onclick="filterCategory('pistol')">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.AtVN-nOsQowZUSFxcFZf3wHaEl?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Súng ngắn" loading="lazy" onerror="this.style.background='#2a2e35'" />
+                <div class="cat-overlay"><span class="cat-label">Súng Ngắn</span></div>
+            </div>
+            <div class="cat-card" onclick="filterCategory('shotgun')">
+                <img src="https://m.media-amazon.com/images/I/51iCGQL1IwL.jpg" alt="Shotgun" loading="lazy" onerror="this.style.background='#2a2e35'" />
+                <div class="cat-overlay"><span class="cat-label">Súng Hoa Cải</span></div>
+            </div>
+            <div class="cat-card" onclick="filterCategory('special')">
+                <img src="https://tse4.mm.bing.net/th/id/OIP.vafScLeqN9IR9ES6ZU1oXAHaEK?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Đặc nhiệm" loading="lazy" onerror="this.style.background='#2a2e35'" />
+                <div class="cat-overlay"><span class="cat-label">Lực Lượng Đặc Nhiệm</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="shop">
+        <div class="section-header">
+            <span class="section-tag">Sản Phẩm</span>
+            <h2 class="section-title">Kho Vũ Khí</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="toolbar" id="toolbar">
+            <div class="filter-group" id="filterPills">
+                <button class="pill active" data-filter="all">Tất Cả</button>
+                <button class="pill" data-filter="sniper">Bắn Tỉa</button>
+                <button class="pill" data-filter="smg">Tiểu Liên</button>
+                <button class="pill" data-filter="pistol">Súng Ngắn</button>
+                <button class="pill" data-filter="shotgun">Shotgun</button>
+                <button class="pill" data-filter="special">Đặc Nhiệm</button>
+            </div>
+            <div class="search-wrap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input type="text" id="searchInput" placeholder="Tìm vũ khí..." />
+            </div>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+    </section>
+
+    <section class="section" id="special">
+        <div class="section-header">
+            <span class="section-tag">Tinh Hoa</span>
+            <h2 class="section-title">Vũ Khí Đặc Nhiệm</h2>
+            <div class="section-divider"></div>
+        </div>
+        <div class="products-grid" id="specialGrid"></div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div><div class="footer-brand">KHANHZZ ARMORY</div><p style="color:var(--text-secondary);">Vũ khí phương Tây chính hãng. Từ cổ điển đến hiện đại, đáp ứng mọi nhu cầu.</p></div>
+            <div class="footer-col"><h4>Cửa Hàng</h4><ul><li><a href="#shop">Tất cả</a></li><li><a href="#special">Đặc nhiệm</a></li></ul></div>
+            <div class="footer-col"><h4>Hỗ Trợ</h4><ul><li><a href="#">Liên Hệ</a></li><li><a href="#">Vận Chuyển</a></li></ul></div>
+            <div class="footer-col"><h4>Kết Nối</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Telegram</a></li></ul></div>
+        </div>
+        <div class="copyright">&copy; 2026 KHANHZZ ARMORY. Bảo lưu mọi quyền.</div>
+    </footer>
+
+    <div class="modal-overlay" id="quickViewOverlay">
+        <div class="modal-dialog">
+            <button class="modal-close" id="quickViewClose">&times;</button>
+            <img class="modal-img" id="qvImage" src="" alt="">
+            <div class="modal-body">
+                <p style="color:var(--accent);text-transform:uppercase;font-size:0.7rem;" id="qvCategory"></p>
+                <h3 style="font-family:Oswald;font-size:1.5rem;margin:0.3rem 0;" id="qvName"></h3>
+                <p style="font-size:1.4rem;font-weight:700;color:var(--accent);" id="qvPrice"></p>
+                <div class="modal-specs" id="qvSpecs"></div>
+                <p id="qvDesc" style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:1.2rem;"></p>
+                <button class="btn btn-dark-gold" style="width:100%;" id="qvAddToCart">Thêm Vào Giỏ</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 style="font-family:Oswald;font-size:1.2rem;">Giỏ Hàng</h3>
+            <button class="modal-close" id="cartCloseBtn" style="position:static;">&times;</button>
+        </div>
+        <div class="cart-body" id="cartBody"></div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div style="display:flex;justify-content:space-between;font-weight:700;margin-bottom:1rem;">
+                <span>Tạm tính</span><span id="cartTotalPrice">$0.00</span>
+            </div>
+            <button class="btn btn-dark-gold" style="width:100%;" onclick="showToast('Chức năng thanh toán sắp ra mắt')">Thanh Toán</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const products = [
+            { id:1, name:'Barrett M82', category:'sniper', price:3999.99, badge:'Huyền Thoại', special:false, desc:'Súng bắn tỉa bán tự động .50 BMG. Tầm bắn hiệu quả 1800m.', specs:{'Cỡ nòng':'.50 BMG','Hộp đạn':'10 viên','Tầm xa':'1800m','Khối lượng':'14 kg'}, image:'https://www.ecured.cu/images/thumb/2/26/Barret.jpg/390px-Barret.jpg' },
+            { id:2, name:'Accuracy International AXMC', category:'sniper', price:5480.00, badge:'Đặc Nhiệm', special:true, desc:'Súng bắn tỉa đa cỡ nòng. Được SEAL Team 6 tin dùng.', specs:{'Cỡ nòng':'.338 Lapua','Hộp đạn':'10 viên','Tầm xa':'1500m+','Khối lượng':'7.1 kg'}, image:'https://cdn.shopify.com/s/files/1/0358/7913/products/AXMC338_-1_1024x1024.jpg?v=1479484130' },
+            { id:3, name:'HK MP5', category:'smg', price:2899.99, badge:'Kinh Điển', special:true, desc:'Súng tiểu liên 9mm huyền thoại. Độ chính xác cao, độ tin cậy tuyệt đối.', specs:{'Cỡ nòng':'9mm','Hộp đạn':'30 viên','Tốc độ bắn':'800 phát/phút','Khối lượng':'3.1 kg'}, image:'https://tse2.mm.bing.net/th/id/OIP.OoG6GnRJ8R1CLYx41YMqQQHaFQ?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { id:4, name:'FN P90', category:'smg', price:2199.99, badge:'Bullpup', special:false, desc:'Thiết kế bullpup nhỏ gọn, sử dụng đạn 5.7x28mm xuyên giáp.', specs:{'Cỡ nòng':'5.7mm','Hộp đạn':'50 viên','Tốc độ bắn':'900 phát/phút','Khối lượng':'2.6 kg'}, image:'https://thfvnext.bing.com/th/id/R.75af43074cf105be346d253d20717b6b?rik=M2%2bPZYmLSachXA&pid=ImgRaw&r=0' },
+            { id:5, name:'Colt M1911', category:'pistol', price:1299.99, badge:'Huyền Thoại', special:false, desc:'Súng ngắn bán tự động .45 ACP. Phục vụ quân đội Mỹ hơn 100 năm.', specs:{'Cỡ nòng':'.45 ACP','Hộp đạn':'7 viên','Khối lượng':'1.1 kg'}, image:'https://tse1.mm.bing.net/th/id/OIP.5EKkr3TFjNLQNPp_gI8E_AHaE8?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { id:6, name:'SIG P226', category:'pistol', price:1199.99, badge:'SEAL', special:true, desc:'Súng ngắn 9mm được SEAL sử dụng. Độ bền và độ tin cậy cực cao.', specs:{'Cỡ nòng':'9mm','Hộp đạn':'15 viên','Khối lượng':'0.95 kg'}, image:'https://tse1.mm.bing.net/th/id/OIP.JNQtmriBSgZEUxjUCiwwMwHaHa?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { id:7, name:'Benelli M4', category:'shotgun', price:2499.99, badge:'Bán Tự Động', special:true, desc:'Shotgun bán tự động 12 gauge. Được lực lượng đặc nhiệm Mỹ ưa chuộng.', specs:{'Cỡ nòng':'12 Gauge','Hộp đạn':'5+1 viên','Khối lượng':'3.8 kg'}, image:'https://tse1.mm.bing.net/th/id/OIP.1VLg84Nf0H5M2UwBQ6Ay1QHaD8?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { id:8, name:'FN SCAR-H', category:'special', price:3899.99, badge:'SOCOM', special:true, desc:'Súng trường tấn công 7.62mm. Trang bị cho lực lượng đặc biệt Mỹ.', specs:{'Cỡ nòng':'7.62mm','Hộp đạn':'20 viên','Tốc độ bắn':'625 phát/phút','Khối lượng':'3.6 kg'}, image:'https://tse2.mm.bing.net/th/id/OIP.zcA-odXoROuqlrRYcvmilAHaCh?r=0&cb=thfvnextfalcon3&rs=1&pid=ImgDetMain&o=7&rm=3' },
+            { id:9, name:'HK416', category:'special', price:4599.99, badge:'Delta Force', special:true, desc:'Súng trường tấn công 5.56mm. Độ chính xác cao, tin cậy trong mọi điều kiện.', specs:{'Cỡ nòng':'5.56mm','Hộp đạn':'30 viên','Tốc độ bắn':'900 phát/phút','Khối lượng':'3.5 kg'}, image:'https://thfvnext.bing.com/th/id/R.f7ce65422b54f3a6f7416f74d98e06c6?rik=R6F004P1d%2flRfw&pid=ImgRaw&r=0' },
+        ];
+
+        let cart = [];
+        let activeFilter = 'all';
+        let searchTerm = '';
+        let qvProductId = null;
+
+        const $ = (s) => document.querySelector(s);
+        const $$ = (s) => document.querySelectorAll(s);
+        const productsGrid = $('#productsGrid');
+        const specialGrid = $('#specialGrid');
+        const filterPills = $('#filterPills');
+        const searchInput = $('#searchInput');
+        const cartSidebar = $('#cartSidebar');
+        const cartOverlay = $('#cartOverlay');
+        const cartBody = $('#cartBody');
+        const cartFooter = $('#cartFooter');
+        const cartTotalPrice = $('#cartTotalPrice');
+        const cartDot = $('#cartDot');
+        const toast = $('#toast');
+
+        function init() {
+            loadCart();
+            renderAll();
+            setupListeners();
+            startHeroSlider();
+        }
+        function loadCart() {
+            try { const c = localStorage.getItem('khanhzz_elite_cart'); if (c) cart = JSON.parse(c); } catch(e) {}
+        }
+        function saveCart() { localStorage.setItem('khanhzz_elite_cart', JSON.stringify(cart)); }
+
+        function getFilteredProducts() {
+            let list = [...products];
+            if (activeFilter !== 'all') list = list.filter(p => p.category === activeFilter);
+            if (searchTerm.trim()) {
+                const q = searchTerm.trim().toLowerCase();
+                list = list.filter(p => p.name.toLowerCase().includes(q) || p.category.includes(q));
+            }
+            return list;
+        }
+        function renderProductsGrid() {
+            const filtered = getFilteredProducts();
+            if (filtered.length === 0) {
+                productsGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-secondary);padding:3rem;">Không tìm thấy sản phẩm.</p>';
+            } else {
+                productsGrid.innerHTML = filtered.map(p => createProductCard(p)).join('');
+                attachProductEvents(productsGrid);
+            }
+        }
+        function renderSpecialGrid() {
+            const specials = products.filter(p => p.special);
+            specialGrid.innerHTML = specials.map(p => createProductCard(p)).join('');
+            attachProductEvents(specialGrid);
+        }
+        function createProductCard(p) {
+            return `
+            <div class="product-card" data-pid="${p.id}">
+                <div class="product-img">
+                    <img src="${p.image}" alt="${p.name}" loading="lazy" onload="this.classList.add('loaded')" onerror="this.style.background='#2a2e35'">
+                    ${p.badge ? `<span class="product-badge ${p.special?'special':''}">${p.badge}</span>` : ''}
+                    <div class="quick-actions">
+                        <button class="btn-sm" data-qv="${p.id}">Xem Nhanh</button>
+                        <button class="btn-sm solid" data-add="${p.id}">Thêm</button>
+                    </div>
+                </div>
+                <div class="product-info">
+                    <p class="product-cat">${p.category}</p>
+                    <p class="product-name">${p.name}</p>
+                    <p class="product-price">$${p.price.toFixed(2)}</p>
+                </div>
+            </div>`;
+        }
+        function attachProductEvents(container) {
+            container.querySelectorAll('.btn-sm[data-add]').forEach(b => b.addEventListener('click', (e) => {
+                e.stopPropagation();
+                addToCart(parseInt(b.dataset.add));
+            }));
+            container.querySelectorAll('.btn-sm[data-qv]').forEach(b => b.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openQuickView(parseInt(b.dataset.qv));
+            }));
+            container.querySelectorAll('.product-card').forEach(c => c.addEventListener('click', () => openQuickView(parseInt(c.dataset.pid))));
+        }
+        function renderAll() { renderProductsGrid(); renderSpecialGrid(); updateCartUI(); }
+
+        function addToCart(pid) {
+            const p = products.find(x => x.id === pid);
+            if (!p) return;
+            const existing = cart.find(i => i.pid === pid);
+            if (existing) existing.qty++; else cart.push({pid, name:p.name, price:p.price, image:p.image, qty:1});
+            saveCart(); updateCartUI(); showToast('Đã thêm vào giỏ'); animateDot();
+        }
+        function removeFromCart(pid) { cart = cart.filter(i => i.pid !== pid); saveCart(); updateCartUI(); showToast('Đã xóa'); }
+        function cartTotal() { return cart.reduce((t,i) => t + i.price * i.qty, 0); }
+        function cartCount() { return cart.reduce((c,i) => c + i.qty, 0); }
+        function updateCartUI() { const count = cartCount(); cartDot.classList.toggle('active', count > 0); renderCartBody(); }
+        function animateDot() { cartDot.classList.remove('active'); void cartDot.offsetWidth; cartDot.classList.add('active'); }
+        function renderCartBody() {
+            if (cart.length === 0) {
+                cartBody.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:3rem;">Giỏ hàng trống</p>';
+                cartFooter.style.display = 'none';
+            } else {
+                cartBody.innerHTML = cart.map(i => `
+                    <div class="cart-item">
+                        <img class="cart-item-img" src="${i.image}" alt="${i.name}" onerror="this.style.background='#2a2e35'">
+                        <div style="flex:1">
+                            <p style="font-weight:600;">${i.name}</p>
+                            <p style="font-size:0.7rem;color:var(--text-secondary);">SL: ${i.qty}</p>
+                            <p style="font-weight:700;color:var(--accent);">$${(i.price*i.qty).toFixed(2)}</p>
+                            <button class="cart-item-remove" data-rid="${i.pid}">Xóa</button>
+                        </div>
+                    </div>`).join('');
+                cartFooter.style.display = 'block';
+                cartTotalPrice.textContent = '$'+cartTotal().toFixed(2);
+                cartBody.querySelectorAll('.cart-item-remove').forEach(b => b.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    removeFromCart(parseInt(b.dataset.rid));
+                }));
+            }
+        }
+        function openCart() { cartSidebar.classList.add('open'); cartOverlay.classList.add('open'); }
+        function closeCart() { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('open'); }
+
+        function openQuickView(pid) {
+            const p = products.find(x => x.id === pid);
+            if (!p) return;
+            qvProductId = pid;
+            $('#qvImage').src = p.image;
+            $('#qvCategory').textContent = p.category;
+            $('#qvName').textContent = p.name;
+            $('#qvPrice').textContent = '$'+p.price.toFixed(2);
+            $('#qvDesc').textContent = p.desc;
+            const specsDiv = $('#qvSpecs');
+            specsDiv.innerHTML = Object.entries(p.specs).map(([k,v]) => `<div class="spec-item"><span class="spec-label">${k}</span><span class="spec-value">${v}</span></div>`).join('');
+            $('#quickViewOverlay').classList.add('open');
+        }
+        function closeQuickView() { $('#quickViewOverlay').classList.remove('open'); qvProductId = null; }
+
+        function setFilter(category) {
+            activeFilter = category;
+            $$('#filterPills .pill').forEach(p => p.classList.remove('active'));
+            const activePill = document.querySelector(`#filterPills [data-filter="${category}"]`);
+            if (activePill) activePill.classList.add('active');
+            renderProductsGrid();
+        }
+        window.filterCategory = setFilter;
+
+        function startHeroSlider() {
+            const slides = $$('.hero-slide');
+            let current = 0;
+            setInterval(() => {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }, 4500);
+        }
+        function showToast(msg) {
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove('show'), 2200);
+        }
+
+        function setupListeners() {
+            $('#cartBtn').addEventListener('click', openCart);
+            $('#cartCloseBtn').addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+            $('#quickViewClose').addEventListener('click', closeQuickView);
+            $('#quickViewOverlay').addEventListener('click', (e) => { if (e.target === $('#quickViewOverlay')) closeQuickView(); });
+            $('#qvAddToCart').addEventListener('click', () => { if (qvProductId) { addToCart(qvProductId); closeQuickView(); } });
+            filterPills.addEventListener('click', (e) => { const pill = e.target.closest('.pill'); if (pill) setFilter(pill.dataset.filter); });
+            let searchTimeout;
+            searchInput.addEventListener('input', () => { searchTerm = searchInput.value; clearTimeout(searchTimeout); searchTimeout = setTimeout(renderProductsGrid, 300); });
+            $('#userBtn').addEventListener('click', () => { showToast('Tính năng đăng nhập đang phát triển'); });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (cartSidebar.classList.contains('open')) closeCart();
+                    if ($('#quickViewOverlay').classList.contains('open')) closeQuickView();
+                }
+            });
+        }
+        init();
+    </script>
+</body>
+</html>
